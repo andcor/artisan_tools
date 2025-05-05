@@ -100,3 +100,10 @@ def check_clean():
     Check if the working directory is clean.
     """
     return not run_git_command("status --porcelain")
+
+
+def check_not_ahead():
+    """
+    Check if the current branch is not ahead of the remote branch.
+    """
+    return run_git_command("rev-list --count @{upstream}...HEAD") == "0"
