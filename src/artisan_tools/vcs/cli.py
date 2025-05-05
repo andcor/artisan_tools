@@ -30,6 +30,33 @@ def factory(app):
             )
             raise typer.Exit(code=1)
 
+
+    @cli.command()
+    def check_clean():
+        """
+        Check if the current working directory is clean (no uncommitted changes).
+        """
+        if artisan_tools.vcs.main.check_clean():
+            print("Working directory is clean.")
+            raise typer.Exit(code=0)
+        else:
+            print("Working directory is not clean.")
+            raise typer.Exit(code=1)
+
+
+    @cli.command()
+    def check_not_ahead():
+        """
+        Check if the current branch is not ahead of the remote branch.
+        """
+        if artisan_tools.vcs.main.check_not_ahead():
+            print("Current branch is not ahead of the remote branch.")
+            raise typer.Exit(code=0)
+        else:
+            print("Current branch is ahead of the remote branch.")
+            raise typer.Exit(code=1)
+
+
     @cli.command()
     def check_branch(
         expected_branch: str = typer.Argument(  # noqa: B008
